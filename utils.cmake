@@ -51,7 +51,7 @@ endif()
 #################################################
 function(target_enable_style_warnings TARGET)
     # Enable compiler options
-    target_compile_options(${TARGET} PRIVATE -Wall -Wextra -Wold-style-cast -Wcast-align) # TODO consider -Wpedantic -Wchkp -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wundef -Wno-unused -Wno-variadic-macros -Wno-parentheses -fdiagnostics-show-option -Wconversion and others?
+    #target_compile_options(${TARGET} PRIVATE -Wall -Wextra -Wold-style-cast -Wcast-align) # TODO consider -Wpedantic -Wchkp -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wundef -Wno-unused -Wno-variadic-macros -Wno-parentheses -fdiagnostics-show-option -Wconversion and others?
 
     # Enable clang-tidy
     #set_target_properties(
@@ -68,6 +68,9 @@ endfunction(target_enable_style_warnings)
 #  target_add_boost(buildtarget system filesystem) # list all libraries to link against in the dependencies
 ##################################################
 function(target_add_boost TARGET)
+    set(BOOST_ROOT "D:\\boost_1_65_1")
+	set(BOOST_INCLUDEDIR "D:\\boost_1_65_1\\boost")
+	set(BOOST_LIBRARYDIR "D:\\boost_1_65_1\\lib64-msvc-14.1")
     # Load boost libraries
     if(NOT DEFINED Boost_USE_STATIC_LIBS OR Boost_USE_STATIC_LIBS)
         # Many supported systems don't have boost >= 1.56. Better link it statically.

@@ -52,13 +52,18 @@ set(SOURCES
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
+set(CURL_LIBRARY "C:\\Users\\Heinzi\\curl-7.60.0\\builds\\libcurl-vc-x64-release-dll-ipv6-sspi-winssl\\lib\\libcurl.lib")
+set(CURL_INCLUDE_DIR "C:\\Users\\Heinzi\\curl-7.60.0\\builds\\libcurl-vc-x64-release-dll-ipv6-sspi-winssl\\include")
 find_package(CURL REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CURL_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${CURL_LIBRARIES})                                       
+message(STATUS curl ${CURL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PUBLIC ${CURL_LIBRARIES})
 
-find_package(Backtrace REQUIRED)
-target_include_directories(${PROJECT_NAME} PUBLIC ${Backtrace_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${Backtrace_LIBRARIES})
+if(NOT WIN32)
+  find_package(Backtrace REQUIRED)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${Backtrace_INCLUDE_DIRS})
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${Backtrace_LIBRARIES})
+endif(NOT WIN32)
 
 if(NOT WIN32)
   find_package(Backtrace REQUIRED)
@@ -72,6 +77,8 @@ target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_DL_LIBS})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC spdlog cryptopp)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC DbgHelp)
 
 target_add_boost(${PROJECT_NAME} filesystem system thread)
 target_enable_style_warnings(${PROJECT_NAME})
